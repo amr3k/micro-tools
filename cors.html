@@ -1,0 +1,43 @@
+<html>
+
+<head>
+    <style>
+        #result {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Test CORS</h1>
+    <label for="url">URL:</label>
+    <input type="text" name="url" id="url" autocomplete="false" onkeypress="return testCORS(event);">
+    <br>
+    <textarea cols='100' rows='30' id='result'></textarea>
+    <script>
+        function testCORS(event) {
+            if (event.keyCode == 13 || event.which == 13) {
+                var url = document.getElementById("url").value;
+                var result = document.getElementById("result");
+                if (url.length > 0) {
+                    var req = new XMLHttpRequest();
+                    req.open('GET', url, false);
+                    req.setRequestHeader('content-type', 'text/html');
+                    req.send();
+                    if (req.responseText) {
+                        result.innerText = req.getAllResponseHeaders() + "\n" + req.responseText;
+                    } else {
+                        result.innerText = "Error";
+                    }
+                    result.style.display = "block";
+                }
+
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+
+</html>

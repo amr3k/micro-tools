@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Test iframe</title>
+    <style>
+        #options {
+            display: none;
+            margin-left: 20px;
+        }
+
+        #frame {
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Test iframe</h1>
+    <div> <label for="url">URL:</label>
+        <input type="text" name="url" id="url" autocomplete="false" onkeypress="return enterKey(event)">
+    </div>
+    <div>
+        <p>Options:</p>
+
+        <input type="checkbox" id="sandbox" onclick="optionsBox()">
+        <label for="sandbox">Sandbox?</label>
+        <div id="options">
+            <input type="checkbox" id="allow-forms" value="allow-forms" onclick="optionTrigger()">
+            <label for="allow-forms">allow-forms</label>
+            <br>
+            <input type="checkbox" id="allow-pointer-lock" value="allow-pointer-lock" onclick="optionTrigger()">
+            <label for="allow-pointer-lock">allow-pointer-lock</label>
+            <br>
+            <input type="checkbox" id="allow-popups" value="allow-popups" onclick="optionTrigger()">
+            <label for="allow-popups">allow-popups</label>
+            <br>
+            <input type="checkbox" id="allow-same-origin" value="allow-same-origin" onclick="optionTrigger()">
+            <label for="allow-same-origin"> allow-same-origin</label>
+            <br>
+            <input type="checkbox" id="allow-scripts" value="allow-scripts" onclick="optionTrigger()">
+            <label for="allow-scripts"> allow-scripts</label>
+            <br>
+            <input type="checkbox" id="allow-top-navigation" value="allow-top-navigation" onclick="optionTrigger()">
+            <label for="allow-top-navigation"> allow-top-navigation</label>
+        </div>
+    </div>
+
+    <iframe src="" id="frame" frameborder="1" width="500" height="500"></iframe>
+    <script>
+        var sandboxOptions = "";
+
+        function getid(id) {
+            return document.getElementById(id);
+        }
+
+        function optionsBox() {
+            if (getid('sandbox').checked) {
+                getid('options').style.display = "block";
+            } else {
+                getid('options').style.display = "none";
+            }
+            testFrame();
+        }
+
+        function optionTrigger() {
+            sandboxOptions = "";
+            if (getid('options').style.display == "block") {
+                // sandboxOptions = getid("allow-forms").value + " " + getid("allow-pointer-lock").value + " " + getid(
+                //         "allow-popups").value + " " + getid("allow-same-origin").value + " " + getid("allow-scripts")
+                //     .value + " " + getid("allow-top-navigation").value;
+                if (getid("allow-forms").checked == true) {
+                    sandboxOptions += getid("allow-forms").value;
+                }
+                if (getid("allow-pointer-lock").checked == true) {
+                    sandboxOptions += " " + getid("allow-pointer-lock").value;
+                }
+                if (getid("allow-popups").checked == true) {
+                    sandboxOptions += " " + getid("allow-popups").value;
+                }
+                if (getid("allow-same-origin").checked == true) {
+                    sandboxOptions += " " + getid("allow-same-origin").value;
+                }
+                if (getid("allow-scripts").checked == true) {
+                    sandboxOptions += " " + getid("allow-scripts").value;
+                }
+                if (getid("allow-top-navigation").checked == true) {
+                    sandboxOptions += " " + getid("allow-top-navigation").value;
+                }
+            }
+            testFrame();
+        }
+
+        function testFrame() {
+            var url = getid("url").value;
+            getid("frame").src = url;
+            getid("frame").sandbox = sandboxOptions;
+            getid("frame").style.display = "block";
+        }
+
+        function enterKey(event) {
+            if (event.keyCode == 13 || event.which == 13) {
+                testFrame();
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+
+</html>
