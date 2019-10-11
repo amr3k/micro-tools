@@ -67,9 +67,6 @@
         function optionTrigger() {
             sandboxOptions = "";
             if (getid('options').style.display == "block") {
-                // sandboxOptions = getid("allow-forms").value + " " + getid("allow-pointer-lock").value + " " + getid(
-                //         "allow-popups").value + " " + getid("allow-same-origin").value + " " + getid("allow-scripts")
-                //     .value + " " + getid("allow-top-navigation").value;
                 if (getid("allow-forms").checked == true) {
                     sandboxOptions += getid("allow-forms").value;
                 }
